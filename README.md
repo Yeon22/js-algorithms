@@ -9,24 +9,24 @@
 problems_0.html -> 문제와 답안이 함께 존재하는 file
 
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>출력결과</title>
-    </head>
+  <head>
+    <meta charset="UTF-8">
+    <title>출력결과</title>
+  </head>
     <body>
-        <h1>제목</h1>
-        <p>
-            문제 본문
-        </p>
-        <script>
-            function solution(a, b, c){
-                let answer;
-                // 알고리즘
-                return answer;
-            }
+      <h1>제목</h1>
+      <pre>
+        문제 본문
+      </pre>
+      <script>
+        function solution(a, b, c){
+          let answer;
+            // 알고리즘
+            return answer;
+        }
 
-            console.log(solution(2, 5, 1));
-        </script>
+        console.log(solution(2, 5, 1));
+      </script>
     </body>
 </html>
 ```
