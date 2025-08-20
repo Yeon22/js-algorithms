@@ -24,10 +24,15 @@
     </pre>
     <script>
       function solution(s) {
-        let answer;
+        let answer = "";
+        for (let x of s) {
+          if (!isNaN(x)) answer += x;
+        }
         return answer;
       }
-      console.log(solution());
+
+      let str = "g0en2T0s8eSoft";
+      console.log(solution(str));
     </script>
   </body>
 </html>

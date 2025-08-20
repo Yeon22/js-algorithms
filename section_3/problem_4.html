@@ -22,11 +22,35 @@
       1 0 1 2 1 0 1 2 2 1 0
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(s, t) {
+        let answer = [];
+        // 왼쪽에서 오른쪽으로 탐색
+        let p = 1000;
+        for (let x of s) {
+          if (x === t) {
+            p = 0;
+          } else {
+            p++;
+          }
+          answer.push(p);
+        }
+
+        // 오른쪽에서 왼쪽으로 탐색
+        p = 1000;
+        for (let i = s.length - 1; i >= 0; i--) {
+          if (s[i] === t) {
+            p = 0;
+          } else {
+            p++;
+          }
+          answer[i] = Math.min(answer[i], p);
+        }
         return answer;
       }
-      console.log(solution());
+
+      let str = "teachermode";
+      let t = "e";
+      console.log(solution(str, t));
     </script>
   </body>
 </html>
