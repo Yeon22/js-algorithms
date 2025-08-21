@@ -25,11 +25,38 @@
       23 2 73 2 3
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function isPrime(num) {
+        if (num < 2) return false;
+
+        for(let i = 2; i <= Math.floor(Math.sqrt(num)); i++) {
+          if (num % i === 0) return false;
+        }
+
+        return true;
+      }
+
+      function solution(arr) {
+        let answer = [];
+        for (let x of arr) {
+          let res = 0;
+          while (x > 0) {
+            let t = x % 10;
+            res = res * 10 + t;
+            x = Math.floor(x / 10);
+          }
+
+          // 더 쉬운 방법
+          // let res = Number(x.toString().split('').reverse().join(''));
+
+          if (isPrime(res)) {
+            answer.push(res);
+          }
+        }
         return answer;
       }
-      console.log(solution());
+
+      let arr = [32, 55, 62, 20, 250, 370, 200, 30, 100];
+      console.log(solution(arr));
     </script>
   </body>
 </html>

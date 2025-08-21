@@ -25,11 +25,27 @@
       143
     </pre>
     <script>
-      function solution(s) {
+      function solution(cards, k) {
         let answer;
+        let s = new Set();
+        let length = cards.length;
+
+        for (let i = 0; i < length; i++) {
+          for (let j = i + 1; j < length; j++) {
+            for (let l = j + 1; l < length; l++) {
+              s.add(cards[i] + cards[j] + cards[l]);
+            }
+          }
+        }
+        // 중복 제거 후 내림차순 정렬
+        let arr = Array.from(s).sort((a, b) => b - a);
+        answer = arr[k - 1];
         return answer;
       }
-      console.log(solution());
+
+      let arr = [13, 15, 34, 23, 45, 65, 33, 11, 26, 42];
+      let k = 3;
+      console.log(solution(arr, k));
     </script>
   </body>
 </html>

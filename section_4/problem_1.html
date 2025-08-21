@@ -24,11 +24,38 @@
       137
     </pre>
     <script>
-      function solution(s) {
+      function solution(arr) {
         let answer;
+        let max = Number.MIN_SAFE_INTEGER;
+        for (let x of arr) {
+          let sum = 0;
+          let tmp = x;
+          while (tmp > 0) {
+            sum += (tmp % 10);
+            tmp = Math.floor(tmp / 10);
+          }
+          console.log(sum);
+          if (sum > max) {
+            max = sum;
+            answer = x;
+          } else if (sum === max) {
+            if (x > answer) answer = x;
+          }
+
+          // 더 간단한 방법
+          // let sum = x.toString().split("").reduce((acc, cur) => acc + Number(cur), 0);
+          // if (sum > max) {
+          //   max = sum;
+          //   answer = x;
+          // } else if (sum === max) {
+          //   if (x > answer) answer = x;
+          // }
+        }
         return answer;
       }
-      console.log(solution());
+
+      let arr = [128, 460, 603, 40, 521, 137, 123, 1234];
+      console.log(solution(arr));
     </script>
   </body>
 </html>

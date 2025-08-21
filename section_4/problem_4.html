@@ -35,11 +35,43 @@
       (2, 2), (4, 3), (4, 5)와 (10, 3)를 할인받아 (5, 3)에 사면 비용이 4+7+9+8=28입니다.
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(budget, products) {
+        let answer = 0;
+        let n = products.length;
+
+        // 각 상품 + 배송비 오름차순 정렬
+        products.sort((a, b) => a[0] + a[1] - (b[0] + b[1]));
+        for (let i = 0; i < n; i++) {
+          // 할인 쿠폰을 사용한 경우
+          let money = budget - (products[i][0] / 2 + products[i][1]);
+          let count = 1;
+          for (let j = 0; j < n; j++) {
+            // 더 이상 구매할 수 있는 상품이 없으므로 종료
+            if (i !== j && products[j][0] + products[j][1] > money) {
+              break;
+            }
+
+            // 다른 상품의 가격 + 배송비가 남은 예산 이내인지 확인
+            if (i !== j && products[j][0] + products[j][1] <= money) {
+              money -= products[j][0] + products[j][1];
+              count++;
+            }
+          }
+
+          answer = Math.max(answer, count);
+        }
         return answer;
       }
-      console.log(solution());
+
+      let arr = [
+        [6, 6],
+        [2, 2],
+        [4, 3],
+        [4, 5],
+        [10, 3],
+      ];
+      let budget = 28;
+      console.log(solution(budget, arr));
     </script>
   </body>
 </html>
