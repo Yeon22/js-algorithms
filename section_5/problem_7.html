@@ -33,11 +33,32 @@
       NO
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(s1, s2) {
+        let answer = "YES";
+        let map = new Map();
+
+        for (let x of s1) {
+          if (map.has(x)) {
+            map.set(x, map.get(x) + 1);
+          } else {
+            map.set(x, 1);
+          }
+        }
+
+        for (let x of s2) {
+          if (!map.has(x) || map.get(x) === 0) {
+            answer = "NO";
+            break;
+          }
+          map.set(x, map.get(x) - 1);
+        }
+
         return answer;
       }
-      console.log(solution());
+
+      let str1 = "AbaAeCe";
+      let str2 = "baeeACA";
+      console.log(solution(str1, str2));
     </script>
   </body>
 </html>

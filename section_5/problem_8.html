@@ -26,11 +26,51 @@
       출력설명: {bac}, {acb}, {cba} 3개의 부분문자열이 "abc"문자열과 아나그램입니다.
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function compareMaps(map1, map2) {
+        if (map1.size !== map2.size) return false;
+
+        for (let [key, val] of map1) {
+          if (!map2.has(key)) return false;
+          if (map2.get(key) !== val) return false;
+        }
+
+        return true;
+      }
+
+      function solution(s1, s2) {
+        let answer = 0;
+        let s2Map = new Map();
+        let s1Map = new Map();
+
+        for (let x of s2) {
+          if (s2Map.has(x)) s2Map.set(x, s2Map.get(x) + 1);
+          else s2Map.set(x, 1);
+        }
+
+        let len = s2.length - 1;
+        for (let i = 0; i < len; i++) {
+          if (s1Map.has(s1[i])) s1Map.set(s1[i], s1Map.get(s1[i]) + 1);
+          else s1Map.set(s1[i], 1);
+        }
+
+        let lt = 0;
+        for (let rt = len; rt < s1.length; rt++) {
+          if (s1Map.has(s1[rt])) s1Map.set(s1[rt], s1Map.get(s1[rt]) + 1);
+          else s1Map.set(s1[rt], 1);
+
+          if (compareMaps(s1Map, s2Map)) answer++;
+
+          s1Map.set(s1[lt], s1Map.get(s1[lt]) - 1);
+          if (s1Map.get(s1[lt]) === 0) s1Map.delete(s1[lt]);
+
+          lt++;
+        }
         return answer;
       }
-      console.log(solution());
+
+      const str1 = "bacaAacba";
+      const str2 = "abc";
+      console.log(solution(str1, str2));
     </script>
   </body>
 </html>
