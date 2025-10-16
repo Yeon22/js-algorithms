@@ -42,11 +42,32 @@
       24
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(pipeline) {
+        let answer = 0;
+        let stack = [];
+
+        for (let i = 0; i < pipeline.length; i++) {
+          // 여는 괄호면 스택에 넣기
+          if (pipeline[i] === "(") {
+            stack.push(pipeline[i]);
+          } else {
+            // 닫는 괄호면 스택에서 빼기
+            stack.pop();
+
+            // 레이저인 경우
+            if (pipeline[i - 1] === "(") {
+              answer += stack.length;
+              // 쇠막대기의 끝인 경우
+            } else {
+              answer += 1;
+            }
+          }
+        }
         return answer;
       }
-      console.log(solution());
+
+      const pipeline = "(((()(()()))(())()))(()())";
+      console.log(solution(pipeline));
     </script>
   </body>
 </html>

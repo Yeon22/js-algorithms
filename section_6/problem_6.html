@@ -33,11 +33,28 @@
       7
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(princes, k) {
+        let answer = 0;
+        // 큐 구현
+        let queue = Array.from({ length: princes }, (_, i) => i + 1);
+
+        while (queue.length) {
+          // k번째 왕자를 제외하는 과정
+          for (let i = 1; i < k; i++) {
+            // k-1번 이동
+            queue.push(queue.shift());
+          }
+          // k번째 왕자 제외
+          queue.shift();
+
+          // 마지막 왕자일 경우 answer에 저장
+          if (queue.length === 1) answer = queue.shift();
+        }
+
         return answer;
       }
-      console.log(solution());
+
+      console.log(solution(8, 3));
     </script>
   </body>
 </html>

@@ -25,9 +25,29 @@
     <script>
       function solution(s) {
         let answer;
+        let stack = [];
+
+        for (let x of s) {
+          // 숫자면
+          if (!isNaN(x)) {
+            stack.push(Number(x));
+            // 연산자면
+          } else {
+            let rt = stack.pop(); // 오른쪽 피연산자
+            let lt = stack.pop(); // 왼쪽 피연산자
+
+            if (x === "+") stack.push(lt + rt);
+            else if (x === "-") stack.push(lt - rt);
+            else if (x === "*") stack.push(lt * rt);
+            else if (x === "/") stack.push(lt / rt);
+          }
+        }
+
+        answer = stack[0];
         return answer;
       }
-      console.log(solution());
+      const input = "352+*9-";
+      console.log(solution(input));
     </script>
   </body>
 </html>

@@ -37,11 +37,42 @@
       4
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(b, m) {
+        let answer = 0;
+        let stack = [];
+
+        m.forEach((move) => {
+          // moves에 있는 위치에 대해 board의 세로줄을 탐색
+          for (let i = 0; i < b.length; i++) {
+            // 0이 아닌 값(인형)이 나오면
+            if (b[i][move - 1] !== 0) {
+              let doll = b[i][move - 1]; // 인형을 꺼내고
+              b[i][move - 1] = 0; // 인형을 집었으니 0으로 바꿔줌
+
+              // 스택의 가장 위에 있는 인형과 방금 꺼낸 인형이 같으면 터뜨리고, 아니면 스택에 쌓음
+              if (stack[stack.length - 1] === doll) {
+                stack.pop();
+                answer += 2;
+              } else {
+                stack.push(doll);
+              }
+              // 한 번 인형을 집었으면 for문 종료
+              break;
+            }
+          }
+        });
         return answer;
       }
-      console.log(solution());
+
+      const board = [
+        [0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 3],
+        [0, 2, 5, 0, 1],
+        [4, 2, 4, 4, 2],
+        [3, 5, 1, 3, 1],
+      ];
+      const moves = [1, 5, 3, 5, 1, 2, 1, 4];
+      console.log(solution(board, moves));
     </script>
   </body>
 </html>

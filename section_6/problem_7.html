@@ -33,11 +33,23 @@
       YES
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(need, plan) {
+        let answer = "YES";
+        let queue = need.split("");
+        for (let p of plan) {
+          // 필수과목에 포함된 경우
+          if (queue.includes(p)) {
+            // 순서가 맞지 않는 경우
+            if (p !== queue.shift()) return "NO";
+          }
+        }
+        // 필수과목이 남아있는 경우
+        if (queue.length > 0) return "NO";
+
         return answer;
       }
-      console.log(solution());
+
+      console.log(solution("CBA", "CBDAGE"));
     </script>
   </body>
 </html>
