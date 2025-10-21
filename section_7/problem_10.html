@@ -25,11 +25,33 @@
       3
     </pre>
     <script>
-      function solution(s) {
+      function solution(arr, target) {
         let answer;
+
+        // 오름차순 정렬
+        arr.sort((a, b) => a - b);
+
+        // 이분검색
+        let left = 0;
+        let right = arr.length - 1;
+        while (left <= right) {
+          const mid = Math.floor((left + right) / 2);
+          if (arr[mid] === target) {
+            answer = mid + 1;
+            break;
+          } else if (arr[mid] < target) {
+            left = mid + 1;
+          } else {
+            right = mid - 1;
+          }
+        }
+
         return answer;
       }
-      console.log(solution());
+
+      const arr = [23, 87, 65, 12, 57, 32, 99, 81];
+      const target = 32;
+      console.log(solution(arr, target));
     </script>
   </body>
 </html>

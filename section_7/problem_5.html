@@ -46,11 +46,39 @@
       7 5 3 2 6
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(size, tasks) {
+        let answer = Array.from({ length: size }, () => 0);
+
+        tasks.forEach((task) => {
+          let pos = -1;
+          // 캐시 히트 여부 확인
+          for (let i = 0; i < size; i++) {
+            if (answer[i] === task) pos = i;
+          }
+
+          // 캐시 미스
+          if (pos === -1) {
+            // answer.unshift(task);
+            // if (answer.length > size) answer.pop();
+            for (let i = size - 1; i >= 1; i--) {
+              answer[i] = answer[i - 1];
+            }
+          } else {
+            // 캐시 히트 시 해당 작업을 맨 앞으로 이동
+            // answer.splice(pos, 1);
+            // answer.unshift(task);
+            for (let i = pos; i >= 1; i--) {
+              answer[i] = answer[i - 1];
+            }
+          }
+          answer[0] = task;
+        });
         return answer;
       }
-      console.log(solution());
+
+      const size = 5;
+      const tasks = [1, 2, 3, 2, 6, 2, 3, 5, 7];
+      console.log(solution(size, tasks));
     </script>
   </body>
 </html>

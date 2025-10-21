@@ -26,11 +26,45 @@
       3
     </pre>
     <script>
-      function solution(s) {
+      // 특정 거리(distance) 이상 떨어뜨려 최대 몇 마리의 말을 배치할 수 있는지 계산하는 함수
+      function countHorse(stables, distance) {
+        let count = 1; // 첫 번째 마굿간에 말 배치
+        let lastPosition = stables[0]; // 마지막으로 말을 배치한 마굿간 위치
+
+        for (let i = 1; i < stables.length; i++) {
+          // 현재 마굿간과 마지막으로 말을 배치한 마굿간의 거리가 distance 이상인 경우
+          if (stables[i] - lastPosition >= distance) {
+            count++; // 말 배치
+            lastPosition = stables[i]; // 마지막으로 말을 배치한 위치 갱신
+          }
+        }
+
+        return count;
+      }
+
+      function solution(stables, horseCount) {
         let answer;
+        stables.sort((a, b) => a - b); // 마구간 좌표 오름차순 정렬
+
+        let left = 1; // 최소 거리
+        let right = stables[stables.length - 1]; // 최대 거리
+        while (left <= right) {
+          const mid = Math.floor((left + right) / 2); // 중간 거리
+          const count = countHorse(stables, mid); // mid 거리 이상 떨어뜨려 배치 가능한 말의 수 계산
+
+          if (count >= horseCount) {
+            answer = mid; // 가능한 경우이므로 답 갱신
+            left = mid + 1; // 더 큰 거리 시도
+          } else {
+            right = mid - 1; // 더 작은 거리 시도
+          }
+        }
         return answer;
       }
-      console.log(solution());
+
+      const arr = [1, 2, 8, 4, 9];
+      const horseCount = 3;
+      console.log(solution(arr, horseCount));
     </script>
   </body>
 </html>

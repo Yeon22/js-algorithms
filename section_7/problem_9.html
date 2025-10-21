@@ -33,11 +33,46 @@
       2
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(times) {
+        let answer = Number.MIN_SAFE_INTEGER;
+
+        let timeline = [];
+        for (let time of times) {
+          timeline.push([time[0], "s"]); // 's' for start
+          timeline.push([time[1], "e"]); // 'e' for end
+        }
+
+        timeline.sort((a, b) => {
+          // 시간과 's', 'e'를 쌍으로 묶어서 비교
+          if (a[0] === b[0]) {
+            return a[1].charCodeAt() - b[1].charCodeAt(); // 'e' 문자가 's' 문자보다 먼저 오도록
+          } else {
+            return a[0] - b[0]; // 시간으로 정렬
+          }
+        });
+
+        let count = 0;
+        for (let time of timeline) {
+          // 's'이면 입장, 'e'이면 퇴장
+          if (time[1] === "s") {
+            count++;
+          } else {
+            count--;
+          }
+          answer = Math.max(answer, count);
+        }
+
         return answer;
       }
-      console.log(solution());
+
+      const input = [
+        [14, 18],
+        [12, 15],
+        [15, 20],
+        [20, 30],
+        [5, 14],
+      ];
+      console.log(solution(input));
     </script>
   </body>
 </html>
