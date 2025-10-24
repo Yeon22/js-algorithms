@@ -14,27 +14,66 @@
         7 9
         16
       
-        N과 가장 밑에 있는 숫자가 주어져 있을 때 가장 윗줄에 있는 숫자를 구하는 프로그램을 작성하시오.
-        단, 답이 여러가지가 나오는 경우에는 사전순으로 가장 앞에 오는 것을 출력하여야 한다.
-        
-        ▣ 입력설명
-        첫째 줄에 두개의 정수 N(1≤N≤10)과 F가 주어진다. N은 가장 윗줄에 있는 숫자의 개수를 의미하며 F는 가장 밑에 줄에 있는 수로 1,000,000 이하이다.
-        
-        ▣ 출력설명
-        첫째 줄에 삼각형에서 가장 위에 들어갈 N개의 숫자를 빈 칸을 사이에 두고 출력한다. 답이 존재하지 않는 경우는 입력으로 주어지지 않는다.
-        
-        ▣ 입력예제 1
-        4 16
-        
-        ▣ 출력예제 1
-        3 1 2 4
+      N과 가장 밑에 있는 숫자가 주어져 있을 때 가장 윗줄에 있는 숫자를 구하는 프로그램을 작성하시오.
+      단, 답이 여러가지가 나오는 경우에는 사전순으로 가장 앞에 오는 것을 출력하여야 한다.
+      
+      ▣ 입력설명
+      첫째 줄에 두개의 정수 N(1≤N≤10)과 F가 주어진다. N은 가장 윗줄에 있는 숫자의 개수를 의미하며 F는 가장 밑에 줄에 있는 수로 1,000,000 이하이다.
+      
+      ▣ 출력설명
+      첫째 줄에 삼각형에서 가장 위에 들어갈 N개의 숫자를 빈 칸을 사이에 두고 출력한다. 답이 존재하지 않는 경우는 입력으로 주어지지 않는다.
+      
+      ▣ 입력예제 1
+      4 16
+      
+      ▣ 출력예제 1
+      3 1 2 4
     </pre>
     <script>
-      function solution(s) {
+      function solution(n, f) {
         let answer;
+        let dy = Array.from(Array(11), () => Array(11).fill(0)); // 11행 11열의 2차원 배열 생성. 메모이제이션
+        let ch = Array.from({ length: n + 1 }, () => 0); // 순열을 위한 체크 배열
+        let p = Array.from({ length: n }, () => 0);
+        let b = Array.from({ length: n }, () => 0); // 조합수 저장 배열
+        let flag = 0; // 답을 찾았는지 체크
+
+        function combi(n, r) {
+          if (dy[n][r] > 0) return dy[n][r];
+          if (n === r || r === 0) return 1;
+          else return (dy[n][r] = combi(n - 1, r - 1) + combi(n - 1, r));
+        }
+
+        function DFS(L, sum) {
+          if (flag) return; // 답을 찾았으면 종료
+
+          // 순열이 완성되었을 때, 합이 f인지 확인
+          if (L === n && sum === f) {
+            answer = p.slice();
+            flag = 1;
+          } else {
+            // 순열 만들기
+            for (let i = 1; i <= n; i++) {
+              if (ch[i] === 0) {
+                ch[i] = 1;
+                p[L] = i; // 순열 배열에 값 넣기
+                DFS(L + 1, sum + b[L] * p[L]); // 조합수와 곱해서 더하기
+                ch[i] = 0;
+              }
+            }
+          }
+        }
+
+        // 조합수 미리 구하기
+        for (let i = 0; i < n; i++) {
+          b[i] = combi(n - 1, i);
+        }
+
+        DFS(0, 0);
+
         return answer;
       }
-      console.log(solution());
+      console.log(solution(4, 16));
     </script>
   </body>
 </html>

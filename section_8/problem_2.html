@@ -21,11 +21,21 @@
       1011
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(n) {
+        let answer = "";
+
+        function recursive(num) {
+          if (num === 0) return;
+
+          recursive(Math.floor(num / 2)); // 먼저 몫에 대해 재귀 호출
+          answer += num % 2; // 나머지를 문자열로 변환하여 누적
+        }
+        recursive(n);
+
         return answer;
       }
-      console.log(solution());
+
+      console.log(solution(11));
     </script>
   </body>
 </html>

@@ -29,11 +29,28 @@
       242
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(dogWeights, maxWeight) {
+        let answer = Number.MIN_SAFE_INTEGER;
+
+        function DFS(L, sum) {
+          if (sum > maxWeight) return;
+
+          // 부분집합이 완성된 경우
+          if (L === dogWeights.length) {
+            answer = Math.max(answer, sum);
+          } else {
+            DFS(L + 1, sum + dogWeights[L]); // 바둑이를 태우는 경우
+            DFS(L + 1, sum); // 바둑이를 태우지 않는 경우
+          }
+        }
+        DFS(0, 0);
+
         return answer;
       }
-      console.log(solution());
+
+      const maxWeight = 259;
+      const dogWeights = [81, 58, 42, 33, 61];
+      console.log(solution(dogWeights, maxWeight));
     </script>
   </body>
 </html>

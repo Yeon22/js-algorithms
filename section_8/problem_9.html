@@ -26,11 +26,29 @@
       설명 : 5 5 5 동전 3개로 거슬러 줄 수 있다.
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(coins, amount) {
+        let answer = Number.MAX_SAFE_INTEGER;
+
+        // L: 사용한 동전의 개수, sum: 현재까지의 합
+        function DFS(L, sum) {
+          if (sum > amount) return; // 합이 목표 금액을 넘으면 중단
+          if (L >= answer) return; // 이미 최소 개수보다 많으면 중단
+
+          if (sum === amount) {
+            answer = Math.min(answer, L);
+          } else {
+            // 모든 동전 종류를 시도
+            for (let i = 0; i < coins.length; i++) {
+              DFS(L + 1, sum + coins[i]); // 동전을 계속 더해나감
+            }
+          }
+        }
+        DFS(0, 0);
+
         return answer;
       }
-      console.log(solution());
+
+      console.log(solution([1, 2, 5], 15));
     </script>
   </body>
 </html>

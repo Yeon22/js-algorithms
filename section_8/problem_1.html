@@ -21,11 +21,16 @@
       1 2 3
     </pre>
     <script>
-      function solution(s) {
-        let answer;
-        return answer;
+      function solution(n) {
+        function recursive(num) {
+          if (num === 0) return;
+          recursive(num - 1);
+          console.log(num);
+        }
+        recursive(n);
       }
-      console.log(solution());
+
+      solution(3);
     </script>
   </body>
 </html>

@@ -28,11 +28,25 @@
       6
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(n, m) {
+        let answer = [];
+        let temp = Array.from({ length: m }, () => 0); // 조합 담을 배열
+
+        // L: 현재 뽑은 갯수, s: 시작 번호
+        function DFS(L, s) {
+          if (L === m) {
+            answer.push(temp.slice());
+          } else {
+            for (let i = s; i <= n; i++) {
+              temp[L] = i; // i를 뽑음
+              DFS(L + 1, i + 1);
+            }
+          }
+        }
+        DFS(0, 1);
         return answer;
       }
-      console.log(solution());
+      console.log(solution(4, 2));
     </script>
   </body>
 </html>

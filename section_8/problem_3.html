@@ -16,11 +16,22 @@
       후위순회 출력 : 4 5 2 6 7 3 1
     </pre>
     <script>
-      function solution(s) {
-        let answer;
-        return answer;
+      function solution(v) {
+        function DFS(v) {
+          if (v > 7) return;
+          // 전위순회
+          // console.log(v);
+          DFS(v * 2);
+          // 중위순회
+          console.log(v);
+          DFS(v * 2 + 1);
+          // 후위순회
+          // console.log(v);
+        }
+        DFS(v);
       }
-      console.log(solution());
+
+      solution(1);
     </script>
   </body>
 </html>

@@ -30,11 +30,31 @@
       6
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(arr, m) {
+        let answer = [];
+        let checks = Array.from({ length: arr.length }, () => 0);
+        let tempArr = Array.from({ length: m }, () => 0);
+
+        function DFS(L) {
+          if (L === m) {
+            answer.push(tempArr.slice());
+          } else {
+            for (let i = 0; i < arr.length; i++) {
+              // 중복 체크
+              if (checks[i] === 0) {
+                checks[i] = 1;
+                tempArr[L] = arr[i];
+                DFS(L + 1);
+                checks[i] = 0; // 백트래킹
+              }
+            }
+          }
+        }
+        DFS(0);
+
         return answer;
       }
-      console.log(solution());
+      console.log(solution([3, 6, 9], 2));
     </script>
   </body>
 </html>

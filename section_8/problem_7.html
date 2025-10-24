@@ -29,11 +29,29 @@
       41
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(scores, times, maxTime) {
+        let answer = Number.MIN_SAFE_INTEGER;
+
+        function DFS(L, sum, time) {
+          if (time > maxTime) return; // 제한시간 초과 시 종료
+
+          // 부분집합이 완성된 경우
+          if (L === scores.length) {
+            answer = Math.max(answer, sum);
+          } else {
+            DFS(L + 1, sum + scores[L], time + times[L]); // 문제를 푼 경우
+            DFS(L + 1, sum, time); // 문제를 풀지 않은 경우
+          }
+        }
+        DFS(0, 0, 0);
+
         return answer;
       }
-      console.log(solution());
+
+      const maxTime = 20;
+      const scores = [10, 25, 15, 6, 7];
+      const times = [5, 12, 8, 3, 4];
+      console.log(solution(scores, times, maxTime));
     </script>
   </body>
 </html>

@@ -28,11 +28,31 @@
       3
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(n) {
+        let answer = [];
+        // 부분집합 체크 배열
+        let checks = Array.from({ length: n + 1 }, () => 0);
+
+        function DFS(v) {
+          if (v === n + 1) {
+            let tmp = "";
+            for (let i = 1; i <= n; i++) {
+              // checks 배열이 1인 것만 부분집합에 포함
+              if (checks[i] === 1) tmp += i + " ";
+            }
+            if (tmp.length > 0) answer.push(tmp.trim());
+          } else {
+            checks[v] = 1; // 포함
+            DFS(v + 1);
+            checks[v] = 0; // 미포함
+            DFS(v + 1);
+          }
+        }
+        DFS(1);
+
         return answer;
       }
-      console.log(solution());
+      console.log(solution(3));
     </script>
   </body>
 </html>

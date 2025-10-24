@@ -29,11 +29,21 @@
       818809200
     </pre>
     <script>
-      function solution(s) {
+      function solution(n, r) {
         let answer;
+        let dy = Array.from(Array(35), () => Array(35).fill(0)); // 메모이제이션을 위한 2차원 배열 생성. 35행 35열
+
+        function combination(n, r) {
+          if (dy[n][r] > 0) return dy[n][r]; // 이미 계산된 값이 있으면 반환
+
+          if (r === 0 || n === r) return 1;
+
+          return (dy[n][r] = combination(n - 1, r - 1) + combination(n - 1, r));
+        }
+        answer = combination(n, r);
         return answer;
       }
-      console.log(solution());
+      console.log(solution(33, 19));
     </script>
   </body>
 </html>
