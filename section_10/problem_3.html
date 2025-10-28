@@ -11,6 +11,7 @@
       예를 들어, 원소가 2, 7, 5, 8, 6, 4, 7, 12, 3 이면
       가장 길게 증가하도록 원소들을 차례대로 뽑아내면 2, 5, 6, 7, 12를 뽑아내어
       길이가 5인 최대 부분 증가수열을 만들 수 있다.
+      * 부분 증가 수열이란 수열에서 몇 개의 원소를 제거하여 남은 원소들이 기존의 순서를 유지한 채 증가하는 수열을 의미한다.
       
       ▣ 입력설명
       첫째 줄은 입력되는 데이터의 수 N(1≤N≤1,000, 자연수)를 의미하고,
@@ -27,11 +28,27 @@
       4
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(arr) {
+        let answer = 0;
+        let dy = Array.from({ length: arr.length }, () => 0); // 다이나믹 배열 초기화
+        dy[0] = 1; // 첫 번째 원소의 부분 증가 수열 길이는 1
+
+        for (let i = 1; i < arr.length; i++) {
+          let max = 0;
+          // 이전 원소들과 비교
+          for (let j = i - 1; j >= 0; j--) {
+            if (arr[j] < arr[i] && dy[j] > max) {
+              max = dy[j]; // 이전 원소 중 증가 수열 길이의 최댓값 갱신
+            }
+          }
+          dy[i] = max + 1; // 현재 원소의 부분 증가 수열 길이 계산
+          answer = Math.max(answer, dy[i]); // 최대 길이 갱신
+        }
         return answer;
       }
-      console.log(solution());
+
+      const arr = [5, 3, 7, 8, 6, 2, 9, 4];
+      console.log(solution(arr));
     </script>
   </body>
 </html>

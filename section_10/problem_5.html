@@ -29,11 +29,31 @@
       41
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(problems, limit) {
+        let answer = 0;
+        let dy = Array.from({ length: limit + 1 }, () => 0);
+
+        for (let i = 0; i < problems.length; i++) {
+          const [score, time] = problems[i];
+          // 뒤에서부터 돌면서 이전 값을 참조해야 함. 중복을 막기 위해
+          for (let j = limit; j >= time; j--) {
+            // dy[j] : j시간에 얻을 수 있는 최대 점수
+            dy[j] = Math.max(dy[j], dy[j - time] + score); // 기존 값과 현재 문제를 푼 경우 중 최대값
+          }
+        }
+        answer = dy[limit];
         return answer;
       }
-      console.log(solution());
+
+      const limit = 20;
+      const problems = [
+        [10, 5],
+        [25, 12],
+        [15, 8],
+        [6, 3],
+        [7, 4],
+      ];
+      console.log(solution(problems, limit));
     </script>
   </body>
 </html>

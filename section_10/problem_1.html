@@ -23,11 +23,20 @@
       21
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(n) {
+        let answer = 0;
+        let dy = Array.from({ length: n + 1 }, () => 0);
+        dy[1] = 1; // 1번째 계단까지 오르는 방법의 수
+        dy[2] = 2; // 2번째 계단까지 오르는 방법의 수
+
+        // 3번째 계단부터 n번째 계단까지 점화식 적용
+        for (let i = 3; i <= n; i++) {
+          dy[i] = dy[i - 1] + dy[i - 2];
+        }
+        answer = dy[n];
         return answer;
       }
-      console.log(solution());
+      console.log(solution(7));
     </script>
   </body>
 </html>
