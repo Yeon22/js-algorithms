@@ -32,11 +32,36 @@
       5
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      // s: start, e: end
+      function solution(s, e) {
+        let answer = 0;
+        const ch = Array.from({ length: 10001 }, () => 0); // 방문체크
+        const dis = Array.from({ length: 10001 }, () => 0); // 거리 저장
+
+        const queue = [];
+        ch[s] = 1; // 시작점 방문체크
+        queue.push(s); // 큐에 시작점 삽입
+        dis[s] = 0; // 시작점 거리 0
+
+        while (queue.length) {
+          const x = queue.shift();
+
+          // 이동 가능한 세 가지 경우의 수 탐색
+          for (const nx of [x - 1, x + 1, x + 5]) {
+            if (nx === e) return dis[x] + 1; // 도착지점에 도달하면 이동 횟수 반환
+
+            // 유효한 범위 내에 있고 방문하지 않은 경우
+            if (nx > 0 && nx <= 10000 && ch[nx] === 0) {
+              ch[nx] = 1; // 방문체크
+              queue.push(nx); // 큐에 삽입
+              dis[nx] = dis[x] + 1; // 거리 갱신
+            }
+          }
+        }
+
         return answer;
       }
-      console.log(solution());
+      console.log(solution(5, 14));
     </script>
   </body>
 </html>

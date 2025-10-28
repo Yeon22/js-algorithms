@@ -40,11 +40,52 @@
       8
     </pre>
     <script>
-      function solution(s) {
-        let answer;
+      function solution(board) {
+        let answer = 0;
+        let dx = [-1, 0, 1, 0];
+        let dy = [0, 1, 0, -1];
+
+        // x: 현재 x좌표, y: 현재 y좌표
+        function DFS(x, y) {
+          if (x === 6 && y === 6) {
+            answer++;
+          } else {
+            // 4방향 탐색
+            for (let i = 0; i < 4; i++) {
+              let nx = x + dx[i]; // 다음 x좌표
+              let ny = y + dy[i]; // 다음 y좌표
+
+              // 다음 좌표가 격자판 안에 있고, 통로인 경우
+              if (
+                nx >= 0 &&
+                nx < 7 &&
+                ny >= 0 &&
+                ny < 7 &&
+                board[nx][ny] === 0
+              ) {
+                board[nx][ny] = 1; // 방문 체크
+                DFS(nx, ny);
+                board[nx][ny] = 0; // 방문 해제
+              }
+            }
+          }
+        }
+        board[0][0] = 1; // 방문 체크
+        DFS(0, 0);
+
         return answer;
       }
-      console.log(solution());
+
+      const board = [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 1, 1, 0],
+        [0, 0, 0, 1, 0, 0, 0],
+        [1, 1, 0, 1, 0, 1, 1],
+        [1, 1, 0, 0, 0, 0, 1],
+        [1, 1, 0, 1, 1, 0, 0],
+        [1, 0, 0, 0, 0, 0, 0],
+      ];
+      console.log(solution(board));
     </script>
   </body>
 </html>

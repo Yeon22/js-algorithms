@@ -14,9 +14,23 @@
     </pre>
     <script>
       function solution(s) {
-        let answer;
+        let answer = "";
+        let queue = [1]; // root 노드 부터 시작
+
+        while (queue.length) {
+          let v = queue.shift();
+          answer += v + " ";
+
+          // 자식 노드들 탐색
+          for (let nv of [v * 2, v * 2 + 1]) {
+            if (nv > 7) continue; // 자식 노드가 없으면 패스
+            queue.push(nv); // 자식 노드가 존재하면 큐에 삽입
+          }
+        }
+
         return answer;
       }
+
       console.log(solution());
     </script>
   </body>
